@@ -1,0 +1,19 @@
+pipeline {
+    agent any
+    stages {
+
+        stage('Checkout code') {
+            steps {
+                git branch: '**', credentialsId: 'SEPA-GIT', url: 'https://github.com/sepa-joe/sq-test.git'                                      
+            }
+        }
+
+        stage('Run sonar analysis') {
+            steps {
+                withSonarQubeEnv('Main') {
+                    bat 'sonar-scanner'
+                }
+            }
+        }
+    }
+}
